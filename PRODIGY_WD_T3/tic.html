@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tic-Tac-Toe</title>
+  <link rel="stylesheet" href="tac.css" />
+  <script defer src="toe.js"></script>
+</head>
+<body>
+  <div id="start-screen" class="start-screen">
+    <h2>Tic-Tac-Toe</h2>
+    <form id="start-form">
+      <label>
+        <input type="radio" name="mode" value="2p" checked /> 2 Player
+      </label>
+      <label>
+        <input type="radio" name="mode" value="ai" /> Play vs AI
+      </label>
+
+      <div id="player-inputs">
+        <input type="text" id="player-x" placeholder="Player X Name" required />
+        <input type="text" id="player-o" placeholder="Player O Name" required />
+      </div>
+
+      <div id="ai-options" class="hidden">
+        <input type="text" id="player-name-ai" placeholder="Your Name" />
+        <select id="difficulty">
+          <option value="beginner">Beginner (Random)</option>
+          <option value="moderate">Moderate</option>
+          <option value="hard">Hard (Smart AI)</option>
+        </select>
+      </div>
+
+      <button type="submit">Start Game</button>
+    </form>
+  </div>
+
+  <div id="game-container" class="game hidden">
+    <h1>Tic-Tac-Toe</h1>
+    <h2 id="player-info"></h2>
+    <div id="board" class="board"></div>
+    <p id="status"></p>
+    <button onclick="restartGame()">Restart</button>
+  </div><p id="status"></p>
+  <p id="status"></p>
+<button onclick="restartGame()">Restart</button>
+<button onclick="goBackToStart()">Back</button>
+</body>
+</html>

@@ -1,0 +1,103 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #1e1e2f, #27293d);
+    background-image: url('https://images.unsplash.com/photo-1581090700227-1c546c6021b4?auto=format&fit=crop&w=1950&q=80');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    backdrop-filter: blur(5px);
+    transition: background-color 0.5s ease;
+  }
+  
+  body.outside-board {
+    background-color: #5c2a9d;
+  }
+  
+  .start-screen, .game {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 2rem;
+    border-radius: 16px;
+    margin: 2rem auto;
+    max-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  input, select, button {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    width: 80%;
+  }
+  
+  button {
+    background-color: #ff4081;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #e91e63;
+  }
+  
+  label {
+    font-size: 1rem;
+    margin: 0.5rem;
+    color: #ffcccb;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .board {
+    display: grid;
+    grid-template-columns: repeat(3, 80px);
+    grid-template-rows: repeat(3, 80px);
+    gap: 10px;
+    justify-content: center;
+    margin: 20px auto;
+  }
+  
+  .cell {
+    width: 80px;
+    height: 80px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid #333;
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #333;
+    border-radius: 12px;
+    transition: background-color 0.2s, transform 0.2s;
+  }
+  
+  .cell:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.05);
+  }
+  button:last-of-type {
+    margin-top: 10px;
+    background-color: #607d8b;
+  }
+  
+  button:last-of-type:hover {
+    background-color: #455a64;
+  }
+  
+  

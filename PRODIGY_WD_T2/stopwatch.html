@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Stopwatch App</title>
+  <link rel="stylesheet" href="stopwatch.css" />
+</head>
+<body>
+  <!-- Athletic Game Images Background -->
+  <div class="background-images">
+    <img src="" class="images.jpeg" alt="Running">
+    <img src="codes-header-swimming.jpg" class="athletic-img bottom-right" alt="Swimming">
+    <img src="images-1.jpeg" class="athletic-img top-right" alt="Cycling">
+    <img src="Unknown.jpeg" class="athletic-img bottom-left" alt="Long Jump">
+  </div>
+
+  <!-- Stopwatch UI -->
+  <div class="container">
+    <h1>Stopwatch</h1>
+    <div id="display">00:00:00</div>
+    <div class="buttons">
+      <button onclick="start()">Start</button>
+      <button onclick="pause()">Pause</button>
+      <button onclick="reset()">Reset</button>
+      <button onclick="lap()">Lap</button>
+    </div>
+    <ul id="laps"></ul>
+  </div>
+
+  <script src="stopwatch.js"></script>
+</body>
+</html>

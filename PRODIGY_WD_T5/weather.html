@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Weather App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            inter: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .fade-in { animation: fadeIn 0.6s ease-out both; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-blue-600 via-indigo-700 to-purple-800 min-h-screen text-white flex items-center justify-center px-4">
+
+  <div class="w-full max-w-3xl bg-white/10 dark:bg-white/5 backdrop-blur-xl rounded-3xl shadow-xl p-8 fade-in">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-bold">🌤️ Weather</h1>
+      <div class="flex items-center gap-2">
+        <label class="flex items-center gap-1 text-sm">
+          °C<input type="checkbox" id="unit-toggle" class="accent-blue-500 ml-1">°F
+        </label>
+        <button id="themeToggle" class="bg-white/20 px-3 py-1 rounded hover:bg-white/30">Toggle Theme</button>
+      </div>
+    </div>
+
+    <div class="relative mb-6">
+      <input type="text" id="search" class="w-full px-5 py-3 rounded-xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white shadow-inner" placeholder="Search city...">
+      <ul id="suggestions" class="absolute bg-white text-black mt-1 rounded-md shadow w-full z-10 hidden"></ul>
+    </div>
+
+    <div id="weather-display" class="text-center space-y-4">
+      <div id="loading" class="hidden animate-pulse">
+        <div class="h-6 bg-white/30 w-1/3 mx-auto rounded"></div>
+        <div class="h-6 bg-white/30 w-1/2 mx-auto rounded mt-2"></div>
+        <div class="h-20 w-20 bg-white/30 mx-auto rounded-full mt-4"></div>
+        <div class="h-8 bg-white/30 w-1/4 mx-auto rounded mt-2"></div>
+      </div>
+      <div id="city" class="text-xl font-semibold"></div>
+      <div id="date" class="text-sm text-gray-200"></div>
+      <img id="icon" class="mx-auto w-20 h-20" src="" alt="" />
+      <div id="temp" class="text-4xl font-bold"></div>
+      <div id="condition" class="capitalize"></div>
+      <div id="feels" class="text-sm text-gray-300"></div>
+    </div>
+
+    <h2 class="text-xl font-semibold mt-8 mb-3 text-center">Next 3 Days</h2>
+    <div id="forecast" class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-white">
+      <!-- Forecast Cards -->
+    </div>
+  </div>
+
+  <script>
+    const weatherAPI = {
+      key: "e01d59d8987f4810845200925251004",
+      base: "https://api.weatherapi.com/v1/"
+    };
+
+    const geoAPI = {
+      base: "https://wft-geo-db.p.rapidapi.com/v1/geo/cities",
+      headers: {
+        'X-RapidAPI-Key': 'YOUR_RAPIDAPI_KEY',
+        'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com'
+      }
+    };
+
+    const searchInput = document.getElementById('search');
+    const suggestions = document.getElementById('suggestions');
+    const unitToggle = document.getElementById('unit-toggle');
+    let useFahrenheit = false;
+
+    unitToggle.addEventListener('change', () => {
+      useFahrenheit = unitToggle.checked;
+      if (currentCity) getWeather(currentCity);
+    });
+
+    document.getElementById("themeToggle").onclick = () => {
+      document.documentElement.classList.toggle("dark");
+    }
+
+    searchInput.addEventListener('input', async () => {
+      const query = searchInput.value.trim();
+      if (query.length < 2) return suggestions.classList.add('hidden');
+      const res = await fetch(`${geoAPI.base}?limit=5&namePrefix=${query}`, { headers: geoAPI.headers });
+      const data = await res.json();
+      suggestions.innerHTML = data.data.map(city => `<li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">${city.city}</li>`).join('');
+      suggestions.classList.remove('hidden');
+      [...suggestions.children].forEach(li => li.onclick = () => {
+        searchInput.value = li.textContent;
+        suggestions.classList.add('hidden');
+        getWeather(li.textContent);
+      });
+    });
+
+    let currentCity = '';
+
+    searchInput.addEventListener('keypress', e => {
+      if (e.key === 'Enter') {
+        suggestions.classList.add('hidden');
+        getWeather(searchInput.value.trim());
+      }
+    });
+
+    function buildDate(d) {
+      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      return `${days[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+    }
+
+    function showLoading(state) {
+      document.getElementById('loading').classList.toggle('hidden', !state);
+    }
+
+    async function getWeather(query) {
+      showLoading(true);
+      currentCity = query;
+      try {
+        const res = await fetch(`${weatherAPI.base}forecast.json?key=${weatherAPI.key}&q=${query}&days=3`);
+        if (!res.ok) throw new Error("City not found");
+        const data = await res.json();
+        displayWeather(data);
+      } catch (e) {
+        document.getElementById('city').innerText = e.message;
+        document.getElementById('forecast').innerHTML = "";
+      }
+      showLoading(false);
+    }
+
+    function displayWeather(data) {
+      const { location, current, forecast } = data;
+      const isF = useFahrenheit;
+
+      document.getElementById('city').innerText = `${location.name}, ${location.country}`;
+      document.getElementById('date').innerText = buildDate(new Date(location.localtime));
+      document.getElementById('icon').src = `https:${current.condition.icon}`;
+      document.getElementById('temp').innerText = isF ? `${current.temp_f}°F` : `${current.temp_c}°C`;
+      document.getElementById('condition').innerText = current.condition.text;
+      document.getElementById('feels').innerText = `Feels like: ${isF ? current.feelslike_f : current.feelslike_c}°${isF ? 'F' : 'C'}`;
+
+      const forecastEl = document.getElementById('forecast');
+      forecastEl.innerHTML = "";
+      forecast.forecastday.forEach(day => {
+        const d = new Date(day.date);
+        forecastEl.innerHTML += `
+          <div class="bg-white/20 backdrop-blur-md rounded-xl p-4 text-center">
+            <div class="font-semibold">${d.toLocaleDateString('en-US', { weekday: 'short' })}</div>
+            <img class="mx-auto w-12" src="https:${day.day.condition.icon}" alt="">
+            <div class="text-sm">${day.day.condition.text}</div>
+            <div class="mt-1 text-lg font-bold">${isF ? day.day.avgtemp_f : day.day.avgtemp_c}°${isF ? 'F' : 'C'}</div>
+            <div class="text-xs text-gray-200">H: ${isF ? day.day.maxtemp_f : day.day.maxtemp_c}° / L: ${isF ? day.day.mintemp_f : day.day.mintemp_c}°</div>
+          </div>`;
+      });
+    }
+
+    function detectLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            getWeather(`${lat},${lon}`);
+          },
+          () => {
+            getWeather("Delhi");
+          }
+        );
+      } else {
+        getWeather("Delhi");
+      }
+    }
+
+    window.onload = detectLocation;
+  </script>
+</body>
+</html>

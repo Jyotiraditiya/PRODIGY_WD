@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jyotiraditiya Misra | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #0f0f0f;
+      color: #f1f1f1;
+      overflow-x: hidden;
+    }
+
+    header {
+      padding: 20px 50px;
+      background-color: #121212;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #222;
+    }
+
+    header h1 {
+      color: #00f7ff;
+    }
+
+    nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: #bbb;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #00f7ff;
+    }
+
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 80px 50px;
+      background: radial-gradient(circle at top left, #1f1f1f, #0f0f0f);
+    }
+
+    .hero .info {
+      max-width: 500px;
+    }
+
+    .hero h2 {
+      font-size: 40px;
+      color: #fff;
+    }
+
+    .hero h3 {
+      font-size: 24px;
+      color: #00f7ff;
+      margin: 10px 0 20px;
+    }
+
+    .hero p {
+      color: #aaa;
+      line-height: 1.6;
+    }
+
+    .hero .profile-pic {
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 5px solid #00f7ff;
+      box-shadow: 0 0 30px #00f7ff70;
+    }
+
+    .hero .profile-pic img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    section {
+      padding: 60px 50px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    section h2 {
+      font-size: 28px;
+      border-bottom: 2px solid #333;
+      margin-bottom: 20px;
+      color: #00f7ff;
+    }
+
+    section ul {
+      list-style-type: disc;
+      margin-left: 20px;
+      line-height: 1.8;
+    }
+
+    .socials {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .socials a {
+      color: #00f7ff;
+      margin: 0 15px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .socials a:hover {
+      color: #fff;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #777;
+      border-top: 1px solid #222;
+      margin-top: 30px;
+    }
+
+    @media(max-width: 768px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero .profile-pic {
+        margin-top: 30px;
+      }
+    }
+
+    /* Welcome Modal */
+    #welcomeModal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: all 0.3s ease;
+    }
+
+    #welcomeModal .modal-content {
+      background: #121212;
+      padding: 40px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 0 20px #00f7ff80;
+    }
+
+    #welcomeModal h1 {
+      font-size: 36px;
+      color: #00f7ff;
+      margin-bottom: 20px;
+    }
+
+    #welcomeModal p {
+      color: #ccc;
+      margin-bottom: 30px;
+    }
+
+    #welcomeModal button {
+      padding: 10px 25px;
+      background-color: #00f7ff;
+      border: none;
+      color: #000;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    #welcomeModal button:hover {
+      background-color: #00cdd0;
+    }
+
+    body.hidden {
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body class="hidden">
+
+  <!-- Welcome Modal -->
+  <div id="welcomeModal">
+    <div class="modal-content">
+      <h1>Welcome to My Portfolio</h1>
+      <p>Hi, I'm Jyotiraditiya Misra – a passionate developer and creative thinker. Dive in to know more!</p>
+      <button onclick="closeModal()">Enter</button>
+    </div>
+  </div>
+
+  <header>
+    <h1>Portfolio</h1>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
+      <a href="#certs">Certifications</a>
+      <a href="#coding">Coding</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div class="info">
+      <h2>Hello, it's Me</h2>
+      <h3>Jyotiraditiya Misra</h3>
+      <p>I'm a Web Developer, UI/UX Enthusiast, and C++/DSA Instructor. Currently pursuing B.Tech in CSE at SMIT, I lead with creativity and logic to deliver digital experiences.</p>
+    </div>
+  
+  </div>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <p>I'm a third-year B.Tech Computer Science and Engineering student at Sikkim Manipal Institute of Technology. I specialize in full-stack web development and UI/UX design. I also teach offline C++/DSA and co-lead event management for Codhers.</p>
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+    <ul>
+      <li>Data Structures & Algorithms (DSA)</li>
+      <li>Object-Oriented Programming (OOP)</li>
+      <li>Computer Networks, DBMS (SQL)</li>
+      <li>HTML, CSS, JavaScript</li>
+      <li>Python, C, C++</li>
+      <li>UI/UX Design</li>
+      <li>Communication & Leadership</li>
+    </ul>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <ul>
+      <li><strong>SPMOS</strong> – Smart Parking Management System using Dijkstra's algorithm with role-based access</li>
+      <li><strong>Responsive Landing Page</strong> – Mobile-first, cross-browser compatible design</li>
+    </ul>
+  </section>
+
+  <section id="education">
+    <h2>Education</h2>
+    <ul>
+      <li>Sikkim Manipal Institute of Technology – B.Tech CSE (7.0 CGPA)</li>
+      <li>Loyola International School, Lucknow – Class 12 & 10 (CBSE)</li>
+    </ul>
+  </section>
+
+  <section id="certs">
+    <h2>Certifications</h2>
+    <ul>
+      <li>Mastering DSA - Udemy</li>
+      <li>C++ - Udemy</li>
+      <li>UI/UX Essentials - Udemy</li>
+    </ul>
+  </section>
+
+  <section id="coding">
+    <h2>Coding Profiles</h2>
+    <ul>
+      <li><a href="https://leetcode.com/aman_2_0_2_3/" target="_blank" style="color:#00f7ff;">LeetCode Profile</a> – 10+ problems solved</li>
+    </ul>
+  </section>
+
+  <section class="socials" id="contact">
+    <a href="https://github.com/Jyotiraditiya" target="_blank">GitHub</a>
+    <a href="https://www.linkedin.com/in/jyotiraditiya-misra-523699280" target="_blank">LinkedIn</a>
+    <a href="mailto:misrajyotiraditya@gmail.com">Email</a>
+  </section>
+
+  <footer>
+    &copy; <span id="year"></span> Jyotiraditiya Misra. All rights reserved.
+  </footer>
+
+  <script>
+    // Set year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Modal logic
+    function closeModal() {
+      document.getElementById("welcomeModal").style.display = "none";
+      document.body.classList.remove("hidden");
+    }
+  </script>
+</body>
+</html>
